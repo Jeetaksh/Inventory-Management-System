@@ -1,11 +1,30 @@
 import styled from "styled-components";
-import React from "react";
+import "./login.css";
+import axios from "axios";
+import React, { useState } from "react";
 import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function Login() {
+  const navigate = useHistory();
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+
+  const submithandler = async () => {
+    const res = await axios.post(
+      process.env.REACT_APP_URL + "/api/users/login",
+      {
+        email,
+        password,
+      }
+    );
+    localStorage.setItem("user", res.data);
+    navigate.push("/");
+  };
+
   const FacebookBackground =
     "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
   const InstagramBackground =
@@ -13,30 +32,46 @@ function Login() {
   const TwitterBackground =
     "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
   return (
-    <MainContainer>
-      <WelcomeText>WELCOME</WelcomeText>
-      <InputContainer>
-        <Input type="text" placeholder="UserId" />
-        <Input type="password" placeholder="Password" />
-      </InputContainer>
-      <ButtonContainer>
-        <Button content="Sign Up" />
-      </ButtonContainer>
-      <LoginWith>New User</LoginWith>
-      <HorizontalRule />
-      <IconsContainer>
-        <Icon color={FacebookBackground}>
-          <FaFacebookF />
-        </Icon>
-        <Icon color={InstagramBackground}>
-          <FaInstagram />
-        </Icon>
-        <Icon color={TwitterBackground}>
-          <FaTwitter />
-        </Icon>
-      </IconsContainer>
-      <ForgotPassword>Forgot Password </ForgotPassword>
-    </MainContainer>
+    <div id="login">
+      <MainContainer>
+        <WelcomeText>WELCOME</WelcomeText>
+        <InputContainer>
+          <Input
+            value={email}
+            onChange={(e) => {
+              setemail(e.target.value);
+            }}
+            type="text"
+            placeholder="emailId"
+          />
+          <Input
+            value={password}
+            onChange={(e) => {
+              setpassword(e.target.value);
+            }}
+            type="password"
+            placeholder="Password"
+          />
+        </InputContainer>
+        <ButtonContainer>
+          <Button onClick={submithandler} content="Log In" />
+        </ButtonContainer>
+        <LoginWith>New User</LoginWith>
+        <HorizontalRule />
+        <IconsContainer>
+          <Icon color={FacebookBackground}>
+            <FaFacebookF />
+          </Icon>
+          <Icon color={InstagramBackground}>
+            <FaInstagram />
+          </Icon>
+          <Icon color={TwitterBackground}>
+            <FaTwitter />
+          </Icon>
+        </IconsContainer>
+        <ForgotPassword>Forgot Password </ForgotPassword>
+      </MainContainer>
+    </div>
   );
 }
 

@@ -1,7 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-export default function Input({ type, placeholder }) {
-  return <StyledInput type={type} placeholder={placeholder} />;
+export default function Input({ value, onChange, type, placeholder }) {
+  return (
+    <StyledInput
+      value={value}
+      onChange={onChange}
+      type={type}
+      placeholder={placeholder}
+    />
+  );
 }
 
 const StyledInput = styled.input`
