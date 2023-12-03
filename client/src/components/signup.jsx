@@ -1,27 +1,30 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import "./login.css";
 import axios from "axios";
-import React, { useState } from "react";
 import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
-import { Redirect, useHistory, Link } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
-function Login() {
+const Signup = () => {
   const navigate = useHistory();
+  const [name, setName] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
   const submithandler = async () => {
     try {
       const res = await axios.post(
-        process.env.REACT_APP_URL + "/api/users/login",
+        process.env.REACT_APP_URL + "/api/users/register",
         {
           email,
           password,
+          name,
         },
       );
+      console.log(res);
       localStorage.setItem("user", JSON.stringify(res.data));
       navigate.push("/");
     } catch (error) {
@@ -42,6 +45,14 @@ function Login() {
         <WelcomeText>WELCOME</WelcomeText>
         <InputContainer>
           <Input
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            type="text"
+            placeholder="Enter your name"
+          />
+          <Input
             value={email}
             onChange={(e) => {
               setemail(e.target.value);
@@ -59,11 +70,9 @@ function Login() {
           />
         </InputContainer>
         <ButtonContainer>
-          <Button onClick={submithandler} content="Log In" />
+          <Button onClick={submithandler} content="Sign Up" />
         </ButtonContainer>
-        <Link to="/signup">
-          <LoginWith>New User</LoginWith>
-        </Link>
+        <LoginWith>New User</LoginWith>
         <HorizontalRule />
         <IconsContainer>
           <Icon color={FacebookBackground}>
@@ -80,7 +89,7 @@ function Login() {
       </MainContainer>
     </div>
   );
-}
+};
 
 const MainContainer = styled.div`
   display: flex;
@@ -178,5 +187,4 @@ const IconsContainer = styled.div`
 const ForgotPassword = styled.h4`
   cursor: pointer;
 `;
-
-export default Login;
+export default Signup;
