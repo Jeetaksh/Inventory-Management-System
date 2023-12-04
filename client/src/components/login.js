@@ -3,10 +3,9 @@ import "./login.css";
 import axios from "axios";
 import React, { useState } from "react";
 import Button from "./Button";
-import Icon from "./Icon";
 import Input from "./Input";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import { Redirect, useHistory, Link } from "react-router-dom";
+import LNMIIT from "./lnmiit.jpg";
 
 function Login() {
   const navigate = useHistory();
@@ -36,9 +35,15 @@ function Login() {
   const TwitterBackground =
     "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
   return (
-    <div id="login">
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        background: `url(${LNMIIT})no-repeat center center/cover`,
+        minHeight: "100vh",
+      }}
+    >
       {localStorage.getItem("user") && <Redirect to="/" />}
-      <MainContainer>
+      <MainContainer className="border border-top-0">
         <WelcomeText>WELCOME</WelcomeText>
         <InputContainer>
           <Input
@@ -47,7 +52,7 @@ function Login() {
               setemail(e.target.value);
             }}
             type="text"
-            placeholder="emailId"
+            placeholder="Email Id"
           />
           <Input
             value={password}
@@ -61,22 +66,14 @@ function Login() {
         <ButtonContainer>
           <Button onClick={submithandler} content="Log In" />
         </ButtonContainer>
-        <Link to="/signup">
-          <LoginWith>New User</LoginWith>
+        <Link
+          to="/signup"
+          className="bg-primary rounded text-dark px-3 py-2 rounded-pill"
+        >
+          New User
         </Link>
-        <HorizontalRule />
-        <IconsContainer>
-          <Icon color={FacebookBackground}>
-            <FaFacebookF />
-          </Icon>
-          <Icon color={InstagramBackground}>
-            <FaInstagram />
-          </Icon>
-          <Icon color={TwitterBackground}>
-            <FaTwitter />
-          </Icon>
-        </IconsContainer>
-        <ForgotPassword>Forgot Password </ForgotPassword>
+        {/* <HorizontalRule /> */}
+        {/* <ForgotPassword>Forgot Password </ForgotPassword> */}
       </MainContainer>
     </div>
   );

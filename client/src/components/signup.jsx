@@ -6,7 +6,8 @@ import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, Link } from "react-router-dom";
+import LNMIIT from "./lnmiit.jpg";
 
 const Signup = () => {
   const navigate = useHistory();
@@ -24,7 +25,6 @@ const Signup = () => {
           name,
         },
       );
-      console.log(res);
       localStorage.setItem("user", JSON.stringify(res.data));
       navigate.push("/");
     } catch (error) {
@@ -39,9 +39,15 @@ const Signup = () => {
   const TwitterBackground =
     "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
   return (
-    <div id="login">
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        background: `url(${LNMIIT})no-repeat center center/cover`,
+        minHeight: "100vh",
+      }}
+    >
       {localStorage.getItem("user") && <Redirect to="/" />}
-      <MainContainer>
+      <MainContainer className="border border-top-0">
         <WelcomeText>WELCOME</WelcomeText>
         <InputContainer>
           <Input
@@ -69,23 +75,15 @@ const Signup = () => {
             placeholder="Password"
           />
         </InputContainer>
-        <ButtonContainer>
+        <ButtonContainer className="mt-5">
           <Button onClick={submithandler} content="Sign Up" />
         </ButtonContainer>
-        <LoginWith>New User</LoginWith>
-        <HorizontalRule />
-        <IconsContainer>
-          <Icon color={FacebookBackground}>
-            <FaFacebookF />
-          </Icon>
-          <Icon color={InstagramBackground}>
-            <FaInstagram />
-          </Icon>
-          <Icon color={TwitterBackground}>
-            <FaTwitter />
-          </Icon>
-        </IconsContainer>
-        <ForgotPassword>Forgot Password </ForgotPassword>
+        <Link
+          to="/login"
+          className="bg-primary rounded text-dark px-3 py-2 rounded-pill"
+        >
+          Login
+        </Link>
       </MainContainer>
     </div>
   );
