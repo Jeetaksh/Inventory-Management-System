@@ -22,7 +22,8 @@ function Login() {
         },
       );
       localStorage.setItem("user", JSON.stringify(res.data));
-      navigate.push("/");
+      window.location.reload();
+      // navigate.push("/");
     } catch (error) {
       console.log(error);
     }
