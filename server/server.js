@@ -19,32 +19,33 @@ const inventoryRoutes = require("./routes/inventory");
 app.use(express.json());
 app.use(cookieParser());
 
-
 // Error Middleware
 app.use(errorHandler);
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://inventory-management-system-kmcve27la-gnoobmaster69s-projects.vercel.app",
+      "http://localhost:3000",
+    ],
   })
 );
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 
 // Connection URL
 const uri = process.env.MONGODB_URI;
 
 // Initialize Connection Once and Create Connection Pool
 mongoose.connect(
-	uri,
-	{
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	},
-	function (err) {
-		if (err) throw err;
-		console.log("Database Connected");
-	}
+  uri,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  function (err) {
+    if (err) throw err;
+    console.log("Database Connected");
+  }
 );
 
 // Routes that should handle requests
@@ -55,21 +56,21 @@ app.use("/api/users", userRoute);
 
 // Catch errors that go beyond the above routes
 app.use((req, res, next) => {
-	const error = new Error("Not found");
-	error.status = 404;
-	next(error);
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
 });
 
 // Passes direct errors
 app.use((error, req, res, next) => {
-	res.status(error.status || 500);
-	res.json({
-		error: {
-			message: error.message,
-		},
-	});
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
 });
 
 app.listen(port, function () {
-	console.log("Server is running on Port: " + port);
+  console.log("Server is running on Port: " + port);
 });
