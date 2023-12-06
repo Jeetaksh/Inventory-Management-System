@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { useState } from "react";
 
 const apiEndPoint = process.env.REACT_APP_URL;
 
@@ -40,7 +41,12 @@ export default class UpdateList extends Component {
   }
 
   // Function to change state value
+
   onChangeQuantity(e) {
+    if (e.target.value < 0) {
+      alert("ENTER A POSITIVE VALUE");
+      return;
+    }
     this.setState({
       newItemQuantity: e.target.value,
     });
