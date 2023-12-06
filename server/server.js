@@ -23,7 +23,6 @@ app.use(cookieParser());
 app.use(errorHandler);
 app.use(
   cors({
-    credentials: true,
     origin: [
       "https://inventory-management-system-kmcve27la-gnoobmaster69s-projects.vercel.app",
       "http://localhost:3000",
