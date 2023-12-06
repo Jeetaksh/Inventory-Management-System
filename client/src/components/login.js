@@ -25,6 +25,7 @@ function Login() {
       window.location.reload();
       // navigate.push("/");
     } catch (error) {
+      alert("Invalid Credentials");
       console.log(error);
     }
   };
