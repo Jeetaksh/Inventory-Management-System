@@ -3,27 +3,30 @@ import styled from "styled-components";
 import "./login.css";
 import axios from "axios";
 import Button from "./Button";
-import Icon from "./Icon";
 import Input from "./Input";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
-import { useHistory, Redirect, Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import LNMIIT from "./lnmiit.jpg";
 
 const Signup = () => {
-  const navigate = useHistory();
+  const [checkpass, setcheckpass] = useState(false);
   const [name, setName] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [veremail, setveremail] = useState(false);
 
   const submithandler = async () => {
     try {
+      if (password.length <= 6) {
+        setcheckpass(true);
+        return;
+      }
       const res = await axios.post(
         process.env.REACT_APP_URL + "/api/users/register",
         {
           email,
           password,
           name,
-        },
+        }
       );
       localStorage.setItem("user", JSON.stringify(res.data));
       window.location.reload();
@@ -49,7 +52,7 @@ const Signup = () => {
     >
       {localStorage.getItem("user") && <Redirect to="/" />}
       <MainContainer className="border border-top-0">
-        <WelcomeText>WELCOME</WelcomeText>
+        <WelcomeText style={{ marginBlock: "4.5rem" }}>WELCOME</WelcomeText>
         <InputContainer>
           <Input
             value={name}
@@ -70,11 +73,25 @@ const Signup = () => {
           <Input
             value={password}
             onChange={(e) => {
+              if (password.length >= 6) {
+                setcheckpass(false);
+              }
               setpassword(e.target.value);
             }}
             type="password"
             placeholder="Password"
           />
+          {checkpass && (
+            <p
+              style={{
+                fontSize: "10px",
+                marginBlock: "1rem",
+                textAlign: "center",
+              }}
+            >
+              Bad credentials Enter a password of atleast 6 characters.
+            </p>
+          )}
         </InputContainer>
         <ButtonContainer className="mt-5">
           <Button onClick={submithandler} content="Sign Up" />

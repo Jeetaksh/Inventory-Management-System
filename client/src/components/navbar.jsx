@@ -13,12 +13,12 @@ const Navbar = () => {
       className="navbar navbar-expand-sm navbar-dark bg-dark"
       style={{ marginBottom: "20px" }}
     >
-      <a className="navbar-brand" href="https://shafiqimtiaz.github.io/">
+      <a className="navbar-brand" href="https://www.lnmiit.ac.in/">
         <img
           src={logo}
           width="50"
           height="50"
-          alt="https://shafiqimtiaz.github.io/"
+          alt="https://www.lnmiit.ac.in/"
         />
       </a>
       <Link to="/" className="navbar-brand">
