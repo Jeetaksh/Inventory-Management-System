@@ -25,7 +25,7 @@ app.use(
   cors({
     credentials: true,
     origin: [
-      "https://inventory-management-system-kmcve27la-gnoobmaster69s-projects.vercel.app",
+      "https://inventory-management-system-phi.vercel.app",
       "http://localhost:3000",
     ],
   })
