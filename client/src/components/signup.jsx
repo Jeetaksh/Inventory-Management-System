@@ -16,7 +16,7 @@ const Signup = () => {
 
   const submithandler = async () => {
     try {
-      if (password.length <= 6) {
+      if (password.length < 6) {
         setcheckpass(true);
         return;
       }
