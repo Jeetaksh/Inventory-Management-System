@@ -16,7 +16,7 @@ const Signup = () => {
 
   const submithandler = async () => {
     try {
-      if (password.length <= 6) {
+      if (password.length < 6) {
         setcheckpass(true);
         return;
       }
@@ -32,6 +32,7 @@ const Signup = () => {
       window.location.reload();
       // navigate.push("/");
     } catch (error) {
+      alert("User already exists");
       console.log(error);
     }
   };
