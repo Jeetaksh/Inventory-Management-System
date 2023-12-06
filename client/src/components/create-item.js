@@ -90,7 +90,12 @@ export default class UpdateList extends Component {
   // Function called when button is pressed
   async onSubmit(e) {
     e.preventDefault();
-
+    
+  if (this.state.newItemDescription.trim() === "") {
+    alert("Item Name cannot be empty");
+    return;
+  }
+    
     const newItem = {
       description: this.state.newItemDescription,
       quantity: this.state.newItemQuantity,
